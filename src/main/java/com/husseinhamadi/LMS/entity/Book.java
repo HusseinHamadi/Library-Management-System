@@ -43,15 +43,11 @@ public class Book {
     @NotNull
     private String author;
 
-    @Column(name = "publicationYear")
-    @NotEmpty
-    @NotBlank
+    @Column(name = "publication_year")
     @NotNull
     private Long publicationYear;
 
     @Column(name = "ISBN")
-    @NotEmpty
-    @NotBlank
     @NotNull
     private Long ISBN;
 }

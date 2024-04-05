@@ -1,7 +1,8 @@
 package com.husseinhamadi.LMS.advice;
 
+import com.husseinhamadi.LMS.exception.BookNotBorrowedException;
 import com.husseinhamadi.LMS.exception.NotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import com.husseinhamadi.LMS.exception.AlreadyBorrowedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,9 +29,11 @@ public class ExceptionHandler {
         return errorMessage;
     }
 
+
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
-    public Map<String, String> NotFoundException(NotFoundException ex){
+    @org.springframework.web.bind.annotation.ExceptionHandler({AlreadyBorrowedException.class, BookNotBorrowedException.class, AlreadyBorrowedException.class, NotFoundException.class})
+    public Map<String, String> ExceptionsHandler(Exception ex){
         Map<String,String> errorMessage=new HashMap<>();
         errorMessage.put("errorMessage", ex.getMessage());
 

@@ -18,18 +18,6 @@ public class PatronServiceImplementation implements PatronService {
     @Autowired
     PatronRepo patronRepo;
 
-    @Override
-    public PatronDTO toDTO(Patron patron) {
-        return PatronDTO.build(patron.getName(), patron.getContactInfo());
-    }
-
-    @Override
-    public Patron toEntity(PatronDTO patronDTO) {
-        return Patron.builder()
-                .name(patronDTO.getName())
-                .contactInfo(patronDTO.getContactInfo())
-                .build();
-    }
 
     @Override
     public List<PatronDTO> getPatronList() {
@@ -37,15 +25,15 @@ public class PatronServiceImplementation implements PatronService {
         List<Patron> patrons= patronRepo.findAll();
         return patrons
                 .stream()
-                .map(this::toDTO)
+                .map(PatronDTO::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public PatronDTO getPatronById(Long patronId) throws NotFoundException {
+    public Patron getPatronById(Long patronId) throws NotFoundException {
         Optional<Patron> patronOpt=patronRepo.findById(patronId);
         if(patronOpt.isPresent()){
-            return toDTO(patronOpt.get());
+            return patronOpt.get();
         }
         else {
             throw new NotFoundException("patron of id: "+patronId+" doesn't exist");
@@ -53,13 +41,13 @@ public class PatronServiceImplementation implements PatronService {
     }
 
     @Override
-    public PatronDTO createPatron(PatronDTO patron) {
+    public Patron createPatron(PatronDTO patron) {
 
-        return toDTO(patronRepo.save(toEntity(patron)));
+        return patronRepo.save(PatronDTO.toEntity(patron));
     }
 
     @Override
-    public PatronDTO updatePatron(Long patronId, PatronDTO patronDTO) throws NotFoundException {
+    public Patron updatePatron(Long patronId, PatronDTO patronDTO) throws NotFoundException {
 
             Optional<Patron> patronOpt=patronRepo.findById(patronId);
 
@@ -74,8 +62,7 @@ public class PatronServiceImplementation implements PatronService {
                 }
 
 
-                patronRepo.save(patron);
-                return toDTO(patron);
+                return patronRepo.save(patron);
             }
             else{
                 throw new NotFoundException("patron of id: "+patronId+" doesn't exist");

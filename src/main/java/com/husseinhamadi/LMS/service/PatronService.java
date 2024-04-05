@@ -8,17 +8,14 @@ import java.util.List;
 
 public interface PatronService {
 
-    PatronDTO toDTO(Patron patron);
-
-    Patron toEntity(PatronDTO patronDTO);
 
     List<PatronDTO> getPatronList();
 
-    PatronDTO getPatronById(Long patronId) throws NotFoundException;
+    Patron getPatronById(Long patronId) throws NotFoundException;
 
-    PatronDTO createPatron(PatronDTO patron);
+    Patron createPatron(PatronDTO patron);
 
-    PatronDTO updatePatron(Long patronId, PatronDTO patron) throws NotFoundException;
+    Patron updatePatron(Long patronId, PatronDTO patron) throws NotFoundException;
 
     String deletePatron(Long patronId) throws NotFoundException;
 

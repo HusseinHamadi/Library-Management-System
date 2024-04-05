@@ -26,18 +26,18 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long bookId) throws NotFoundException {
-        return new ResponseEntity<BookDTO>(bookService.getBookById(bookId), HttpStatus.OK);
+        return new ResponseEntity<BookDTO>(BookDTO.toDTO(bookService.getBookById(bookId)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<BookDTO> createBook(@RequestBody @Valid BookDTO book){
         System.out.println(book);
-        return new ResponseEntity<BookDTO>(bookService.createBook(book), HttpStatus.CREATED);
+        return new ResponseEntity<BookDTO>(BookDTO.toDTO(bookService.createBook(book)), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookDTO> updateBook(@PathVariable("id") Long bookId, @RequestBody BookDTO book) throws NotFoundException {
-        return new ResponseEntity<BookDTO>(bookService.updateBook(bookId, book), HttpStatus.OK);
+        return new ResponseEntity<BookDTO>(BookDTO.toDTO(bookService.updateBook(bookId, book)), HttpStatus.OK);
     }
 
 

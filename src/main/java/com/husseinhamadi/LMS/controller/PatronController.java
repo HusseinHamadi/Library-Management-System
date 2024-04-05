@@ -23,17 +23,17 @@ public class PatronController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PatronDTO> getPatronById(@PathVariable("id") Long patronId) throws NotFoundException {
-        return new ResponseEntity<PatronDTO>(patronService.getPatronById(patronId), HttpStatus.OK);
+        return new ResponseEntity<PatronDTO>(PatronDTO.toDTO(patronService.getPatronById(patronId)), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<PatronDTO> createPatron(@RequestBody @Valid PatronDTO patron){
-        return new ResponseEntity<PatronDTO>(patronService.createPatron(patron), HttpStatus.CREATED);
+        return new ResponseEntity<PatronDTO>(PatronDTO.toDTO(patronService.createPatron(patron)), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PatronDTO> updatePatron(@PathVariable("id") Long patronId, @RequestBody PatronDTO patron) throws NotFoundException {
-        return new ResponseEntity<PatronDTO>(patronService.updatePatron(patronId, patron), HttpStatus.OK);
+        return new ResponseEntity<PatronDTO>(PatronDTO.toDTO(patronService.updatePatron(patronId, patron)), HttpStatus.OK);
     }
 
 

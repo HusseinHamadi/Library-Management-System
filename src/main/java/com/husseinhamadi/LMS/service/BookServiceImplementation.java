@@ -19,20 +19,8 @@ public class BookServiceImplementation implements BookService {
     @Autowired
     BookRepo bookRepo;
 
-    @Override
-    public BookDTO toDTO(Book book) {
-        return BookDTO.build(book.getTitle(), book.getAuthor(), book.getPublicationYear(), book.getISBN());
-    }
 
-    @Override
-    public Book toEntity(BookDTO bookDTO) {
-        return Book.builder()
-                .title(bookDTO.getTitle())
-                .author(bookDTO.getAuthor())
-                .publicationYear(bookDTO.getPublicationYear())
-                .ISBN(bookDTO.getISBN())
-                .build();
-    }
+
 
     @Override
     public List<BookDTO> getBookList() {
@@ -40,15 +28,15 @@ public class BookServiceImplementation implements BookService {
         List<Book> books= bookRepo.findAll();
         return books
                 .stream()
-                .map(this::toDTO)
+                .map(BookDTO::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public BookDTO getBookById(Long bookId) throws NotFoundException {
+    public Book getBookById(Long bookId) throws NotFoundException {
         Optional<Book> bookOpt=bookRepo.findById(bookId);
         if(bookOpt.isPresent()){
-            return toDTO(bookOpt.get());
+            return bookOpt.get();
         }
         else {
             throw new NotFoundException("Book of id: "+bookId+" doesn't exist");
@@ -56,13 +44,13 @@ public class BookServiceImplementation implements BookService {
     }
 
     @Override
-    public BookDTO createBook(BookDTO book) {
+    public Book createBook(BookDTO book) {
 
-        return toDTO(bookRepo.save(toEntity(book)));
+        return bookRepo.save(BookDTO.toEntity(book));
     }
 
     @Override
-    public BookDTO updateBook(Long bookId, BookDTO bookDTO) throws NotFoundException {
+    public Book updateBook(Long bookId, BookDTO bookDTO) throws NotFoundException {
 
             Optional<Book> bookOpt=bookRepo.findById(bookId);
 
@@ -83,8 +71,8 @@ public class BookServiceImplementation implements BookService {
                 if(Objects.nonNull(bookDTO.getISBN())){
                     book.setISBN(bookDTO.getISBN());
                 }
-                bookRepo.save(book);
-                return toDTO(book);
+
+                return bookRepo.save(book);
             }
             else{
                 throw new NotFoundException("Book of id: "+bookId+" doesn't exist");

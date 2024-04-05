@@ -22,7 +22,7 @@ public class PatronServiceImplementation implements PatronService {
     @Override
     public List<PatronDTO> getPatronList() {
 
-        List<Patron> patrons= patronRepo.findAll();
+        List<Patron> patrons = patronRepo.findAll();
         return patrons
                 .stream()
                 .map(PatronDTO::toDTO)
@@ -31,12 +31,11 @@ public class PatronServiceImplementation implements PatronService {
 
     @Override
     public Patron getPatronById(Long patronId) throws NotFoundException {
-        Optional<Patron> patronOpt=patronRepo.findById(patronId);
-        if(patronOpt.isPresent()){
+        Optional<Patron> patronOpt = patronRepo.findById(patronId);
+        if (patronOpt.isPresent()) {
             return patronOpt.get();
-        }
-        else {
-            throw new NotFoundException("patron of id: "+patronId+" doesn't exist");
+        } else {
+            throw new NotFoundException("patron of id: " + patronId + " doesn't exist");
         }
     }
 
@@ -49,36 +48,34 @@ public class PatronServiceImplementation implements PatronService {
     @Override
     public Patron updatePatron(Long patronId, PatronDTO patronDTO) throws NotFoundException {
 
-            Optional<Patron> patronOpt=patronRepo.findById(patronId);
+        Optional<Patron> patronOpt = patronRepo.findById(patronId);
 
-            if(patronOpt.isPresent()){
-                Patron patron = patronOpt.get();
-                if(Objects.nonNull(patronDTO.getName()) && !"".equalsIgnoreCase((patronDTO.getName()))){
-                    patron.setName(patronDTO.getName());
-                }
-
-                if(Objects.nonNull(patronDTO.getContactInfo()) && !"".equalsIgnoreCase((patronDTO.getContactInfo()))){
-                    patron.setContactInfo(patron.getContactInfo());
-                }
-
-
-                return patronRepo.save(patron);
+        if (patronOpt.isPresent()) {
+            Patron patron = patronOpt.get();
+            if (Objects.nonNull(patronDTO.getName()) && !"".equalsIgnoreCase((patronDTO.getName()))) {
+                patron.setName(patronDTO.getName());
             }
-            else{
-                throw new NotFoundException("patron of id: "+patronId+" doesn't exist");
+
+            if (Objects.nonNull(patronDTO.getContactInfo()) && !"".equalsIgnoreCase((patronDTO.getContactInfo()))) {
+                patron.setContactInfo(patron.getContactInfo());
             }
+
+
+            return patronRepo.save(patron);
+        } else {
+            throw new NotFoundException("patron of id: " + patronId + " doesn't exist");
+        }
 
     }
 
     @Override
     public String deletePatron(Long patronId) throws NotFoundException {
-        Optional<Patron> patronOpt=patronRepo.findById(patronId);
-        if(patronOpt.isPresent()){
+        Optional<Patron> patronOpt = patronRepo.findById(patronId);
+        if (patronOpt.isPresent()) {
             patronRepo.delete(patronOpt.get());
-            return "patron Deleted with ID: "+patronId;
-        }
-        else {
-            throw new NotFoundException("patron of id: "+patronId+" doesn't exist");
+            return "patron Deleted with ID: " + patronId;
+        } else {
+            throw new NotFoundException("patron of id: " + patronId + " doesn't exist");
         }
     }
 }

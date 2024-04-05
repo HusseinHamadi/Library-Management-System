@@ -1,6 +1,5 @@
 package com.husseinhamadi.LMS.entity;
 
-import com.husseinhamadi.LMS.dto.PatronDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -41,7 +40,6 @@ public class Patron {
     @NotBlank
     @NotNull
     private String contactInfo;
-
 
 
 }

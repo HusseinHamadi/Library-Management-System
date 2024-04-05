@@ -1,17 +1,14 @@
 package com.husseinhamadi.LMS.service;
 
 import com.husseinhamadi.LMS.entity.BorrowRecord;
+import com.husseinhamadi.LMS.exception.AlreadyBorrowedException;
 import com.husseinhamadi.LMS.exception.BookNotBorrowedException;
 import com.husseinhamadi.LMS.exception.NotFoundException;
-import com.husseinhamadi.LMS.exception.AlreadyBorrowedException;
 import com.husseinhamadi.LMS.repository.BorrowRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -36,17 +33,16 @@ public class BorrowServiceImplementation implements BorrowService {
         //if there is not a borrowed book with a not returned date, then either book is never borrowed
         //or the book is borrowed and returned in the past
         //create new record in both cases
-        if(borrowRecordOpt.isEmpty()) {
+        if (borrowRecordOpt.isEmpty()) {
             return borrowRepo.save(new BorrowRecord(null,
                     bookService.getBookById(bookId),
                     patronService.getPatronById(patronId),
                     new Date(),
                     null));
-        }
-        else{
+        } else {
 
             //the book is borrowed because the return date is not present, throw exception
-            throw new AlreadyBorrowedException("Book with ID: "+bookId+" is already borrowed by Patron with ID: "+patronId);
+            throw new AlreadyBorrowedException("Book with ID: " + bookId + " is already borrowed by Patron with ID: " + patronId);
 
         }
 

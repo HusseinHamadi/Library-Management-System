@@ -16,9 +16,9 @@ public class ExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> ArgumentsNotValidException(MethodArgumentNotValidException ex){
+    public Map<String, String> ArgumentsNotValidException(MethodArgumentNotValidException ex) {
         //map for field name and error associated to it
-        Map<String,String> errorMessage=new HashMap<>();
+        Map<String, String> errorMessage = new HashMap<>();
 
         //getting field names and associated errors from exception
         ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
@@ -30,11 +30,10 @@ public class ExceptionHandler {
     }
 
 
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @org.springframework.web.bind.annotation.ExceptionHandler({AlreadyBorrowedException.class, BookNotBorrowedException.class, AlreadyBorrowedException.class, NotFoundException.class})
-    public Map<String, String> ExceptionsHandler(Exception ex){
-        Map<String,String> errorMessage=new HashMap<>();
+    public Map<String, String> ExceptionsHandler(Exception ex) {
+        Map<String, String> errorMessage = new HashMap<>();
         errorMessage.put("errorMessage", ex.getMessage());
 
         return errorMessage;

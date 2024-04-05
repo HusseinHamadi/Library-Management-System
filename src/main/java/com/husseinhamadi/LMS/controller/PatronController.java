@@ -16,8 +16,9 @@ import java.util.List;
 public class PatronController {
     @Autowired
     PatronService patronService;
+
     @GetMapping
-    public ResponseEntity<List<PatronDTO>> getPatronList(){
+    public ResponseEntity<List<PatronDTO>> getPatronList() {
         return new ResponseEntity<List<PatronDTO>>(patronService.getPatronList(), HttpStatus.OK);
     }
 
@@ -27,7 +28,7 @@ public class PatronController {
     }
 
     @PostMapping
-    public ResponseEntity<PatronDTO> createPatron(@RequestBody @Valid PatronDTO patron){
+    public ResponseEntity<PatronDTO> createPatron(@RequestBody @Valid PatronDTO patron) {
         return new ResponseEntity<PatronDTO>(PatronDTO.toDTO(patronService.createPatron(patron)), HttpStatus.CREATED);
     }
 

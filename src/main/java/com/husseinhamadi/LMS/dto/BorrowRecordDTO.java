@@ -3,12 +3,12 @@ package com.husseinhamadi.LMS.dto;
 import com.husseinhamadi.LMS.entity.Book;
 import com.husseinhamadi.LMS.entity.BorrowRecord;
 import com.husseinhamadi.LMS.entity.Patron;
-import jakarta.persistence.*;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

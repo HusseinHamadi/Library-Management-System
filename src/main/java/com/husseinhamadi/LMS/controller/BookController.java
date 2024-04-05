@@ -1,13 +1,11 @@
 package com.husseinhamadi.LMS.controller;
 
 import com.husseinhamadi.LMS.dto.BookDTO;
-import com.husseinhamadi.LMS.entity.Book;
 import com.husseinhamadi.LMS.exception.NotFoundException;
 import com.husseinhamadi.LMS.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +17,9 @@ public class BookController {
 
     @Autowired
     BookService bookService;
+
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getBookList(){
+    public ResponseEntity<List<BookDTO>> getBookList() {
         return new ResponseEntity<List<BookDTO>>(bookService.getBookList(), HttpStatus.OK);
     }
 
@@ -30,7 +29,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> createBook(@RequestBody @Valid BookDTO book){
+    public ResponseEntity<BookDTO> createBook(@RequestBody @Valid BookDTO book) {
         System.out.println(book);
         return new ResponseEntity<BookDTO>(BookDTO.toDTO(bookService.createBook(book)), HttpStatus.CREATED);
     }

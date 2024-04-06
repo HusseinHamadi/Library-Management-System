@@ -7,11 +7,13 @@ import com.husseinhamadi.LMS.exception.NotFoundException;
 import com.husseinhamadi.LMS.repository.BorrowRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BorrowServiceImplementation implements BorrowService {
 
     @Autowired

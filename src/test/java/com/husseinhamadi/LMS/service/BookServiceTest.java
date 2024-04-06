@@ -50,10 +50,7 @@ class BookServiceTest {
         assertEquals(bookId, found.getId());
     }
 
-    @Test
-    void createBook() {
 
-    }
 
     @Test
     void updateBook() {

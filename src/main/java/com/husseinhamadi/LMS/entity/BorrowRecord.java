@@ -21,11 +21,11 @@ public class BorrowRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Separate primary key
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "patron_id")
     private Patron patron;
 

@@ -4,7 +4,7 @@ import com.husseinhamadi.LMS.entity.BorrowRecord;
 import com.husseinhamadi.LMS.exception.AlreadyBorrowedException;
 import com.husseinhamadi.LMS.exception.BookNotBorrowedException;
 import com.husseinhamadi.LMS.exception.NotFoundException;
-import com.husseinhamadi.LMS.repository.BorrowRepo;
+import com.husseinhamadi.LMS.repository.BorrowRecordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +14,10 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class BorrowServiceImplementation implements BorrowService {
+public class BorrowRecordServiceImplementation implements BorrowRecordService {
 
     @Autowired
-    BorrowRepo borrowRepo;
+    BorrowRecordRepo borrowRecordRepo;
 
     @Autowired
     BookService bookService;
@@ -30,13 +30,13 @@ public class BorrowServiceImplementation implements BorrowService {
     public BorrowRecord borrowBook(Long bookId, Long patronId) throws NotFoundException, AlreadyBorrowedException {
 
         //getting borrowed but not returned book
-        Optional<BorrowRecord> borrowRecordOpt = borrowRepo.findNotReturnedBook(patronId, bookId);
+        Optional<BorrowRecord> borrowRecordOpt = borrowRecordRepo.findNotReturnedBook(patronId, bookId);
 
         //if there is not a borrowed book with a not returned date, then either book is never borrowed
         //or the book is borrowed and returned in the past
         //create new record in both cases
         if (borrowRecordOpt.isEmpty()) {
-            return borrowRepo.save(new BorrowRecord(null,
+            return borrowRecordRepo.save(new BorrowRecord(null,
                     bookService.getBookById(bookId),
                     patronService.getPatronById(patronId),
                     new Date(),
@@ -54,14 +54,14 @@ public class BorrowServiceImplementation implements BorrowService {
     public BorrowRecord returnBook(Long bookId, Long patronId) throws NotFoundException, BookNotBorrowedException {
 
         //getting borrowed but not returned book
-        Optional<BorrowRecord> borrowRecordOpt = borrowRepo.findNotReturnedBook(patronId, bookId);
+        Optional<BorrowRecord> borrowRecordOpt = borrowRecordRepo.findNotReturnedBook(patronId, bookId);
 
         //if there is a record then update return date to return the book
         if (borrowRecordOpt.isPresent()) {
             BorrowRecord bR = borrowRecordOpt.get();
             bR.setReturnDate(new Date());
 
-            return borrowRepo.save(bR);
+            return borrowRecordRepo.save(bR);
         } else {
             //if there is no record, this means either the book is never borrowed,
             //or the book is returned in the past

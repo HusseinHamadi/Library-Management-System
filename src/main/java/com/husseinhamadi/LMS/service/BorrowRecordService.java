@@ -5,7 +5,7 @@ import com.husseinhamadi.LMS.exception.BookNotBorrowedException;
 import com.husseinhamadi.LMS.exception.NotFoundException;
 import com.husseinhamadi.LMS.exception.AlreadyBorrowedException;
 
-public interface BorrowService {
+public interface BorrowRecordService {
 
 
     BorrowRecord borrowBook(Long bookId, Long patronId) throws NotFoundException, AlreadyBorrowedException;

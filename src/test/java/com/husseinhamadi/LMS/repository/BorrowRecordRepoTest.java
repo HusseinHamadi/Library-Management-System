@@ -43,7 +43,7 @@ class BorrowRecordRepoTest {
     }
 
     @Test
-    void saveBorrow() {
+    void shouldSaveBorrow() {
 
         BorrowRecord borrow = new BorrowRecord(null, null, null, new Date(), null);
         borrowRecordRepo.save(borrow);
@@ -67,7 +67,7 @@ class BorrowRecordRepoTest {
     }
 
     @Test
-    void deleteBorrow() {
+    void shouldDeleteBorrow() {
 
         Book book = new Book(null, "Test Book", "Test Author", 2022L, 123456789L);
         Patron patron = new Patron(null, "test", "123");

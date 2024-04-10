@@ -12,7 +12,10 @@ import java.util.Optional;
 public interface BorrowRecordRepo extends JpaRepository<BorrowRecord, Long> {
 
 
-    @Query(nativeQuery = true, value = "Select * from borrow_record where patron_id=:patronId and book_id=:bookId and return_date IS NULL;")
+    @Query(nativeQuery = true, value =
+            "Select * from borrow_record" +
+            " where patron_id=:patronId and book_id=:bookId and" +
+            " return_date IS NULL;")
     Optional<BorrowRecord> findNotReturnedBook(@Param("patronId") Long patronId,
                                                @Param("bookId") Long bookId);
 }

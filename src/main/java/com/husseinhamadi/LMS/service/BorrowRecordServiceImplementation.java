@@ -1,6 +1,8 @@
 package com.husseinhamadi.LMS.service;
 
+import com.husseinhamadi.LMS.entity.Book;
 import com.husseinhamadi.LMS.entity.BorrowRecord;
+import com.husseinhamadi.LMS.entity.Patron;
 import com.husseinhamadi.LMS.exception.AlreadyBorrowedException;
 import com.husseinhamadi.LMS.exception.BookNotBorrowedException;
 import com.husseinhamadi.LMS.exception.NotFoundException;
@@ -36,11 +38,16 @@ public class BorrowRecordServiceImplementation implements BorrowRecordService {
         //or the book is borrowed and returned in the past
         //create new record in both cases
         if (borrowRecordOpt.isEmpty()) {
-            return borrowRecordRepo.save(new BorrowRecord(null,
-                    bookService.getBookById(bookId),
-                    patronService.getPatronById(patronId),
+            Book book= bookService.getBookById(bookId);
+            Patron patron = patronService.getPatronById(patronId);
+
+            BorrowRecord br =borrowRecordRepo.save(new BorrowRecord(null,
+                    book,
+                    patron,
                     new Date(),
                     null));
+
+            return br;
         } else {
 
             //the book is borrowed because the return date is not present, throw exception

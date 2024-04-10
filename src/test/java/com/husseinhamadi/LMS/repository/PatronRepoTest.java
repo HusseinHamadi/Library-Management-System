@@ -24,7 +24,7 @@ class PatronRepoTest {
     }
 
     @Test
-    void savePatron() {
+    void shouldSavePatron() {
         Patron patron = new Patron(null, "test", "123");
 
 
@@ -34,7 +34,7 @@ class PatronRepoTest {
     }
 
     @Test
-    void findAllPatrons() {
+    void shouldFindAllPatrons() {
         Patron patron1 = new Patron(null, "test", "123");
         Patron patron2 = new Patron(null, "test", "123");
 
@@ -47,7 +47,7 @@ class PatronRepoTest {
     }
 
     @Test
-    void deletePatron() {
+    void shouldDeletePatron() {
         Patron patron = new Patron(null, "test", "123");
 
 

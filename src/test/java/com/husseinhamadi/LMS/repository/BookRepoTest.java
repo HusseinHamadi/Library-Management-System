@@ -5,14 +5,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import static org.assertj.core.api.Assertions.*;
-import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class BookRepoTest {
@@ -26,7 +22,7 @@ class BookRepoTest {
     }
 
     @Test
-    void saveBook() {
+    void shouldSaveBookAndGenerateId() {
         Book book = new Book(null, "Test Book", "Test Author", 2022L, 123456789L);
 
 
@@ -36,7 +32,7 @@ class BookRepoTest {
     }
 
     @Test
-    void findAllBooks() {
+    void shouldFindAllBooks() {
         Book book1 = new Book(null, "Test Book 1", "Test Author 1", 2022L, 111111111L);
         Book book2 = new Book(null, "Test Book 2", "Test Author 2", 2023L, 222222222L);
 
@@ -49,7 +45,7 @@ class BookRepoTest {
     }
 
     @Test
-    void deleteBook() {
+    void shouldDeleteBookById() {
         Book book = new Book(null, "Test Book", "Test Author", 2022L, 123456789L);
 
 

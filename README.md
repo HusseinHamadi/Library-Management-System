@@ -37,6 +37,9 @@ The API provides the following endpoints:
 - `POST /api/borrow/{bookId}/patron/{patronId}`: Borrows a book for a patron.
 - `POST /api/return/{bookId}/patron/{patronId}`: Returns a borrowed book.
 
+## Testing:
+testing is implimentet for all layers and all methods
+
 ## How to Interact with the API
 
 You can interact with the API using tools like Postman, or Swagger UI.

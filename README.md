@@ -15,6 +15,13 @@ To get started with using this API, follow these steps:
 5. Start the Spring Boot application by running the main class `LibraryManagementSystemApplication` or using the provided Maven command `mvn spring-boot:run`.
 6. The API will be accessible at `http://localhost:8081` by default.
 
+### Default Admin Credentials
+
+When the application starts, an admin user is automatically created with the following credentials:
+
+- **Username:** `admin`
+- **Password:** `admin123`
+
 ## API Endpoints
 
 The API provides the following endpoints:
@@ -36,6 +43,22 @@ The API provides the following endpoints:
 ### BorrowRecord:
 - `POST /api/borrow/{bookId}/patron/{patronId}`: Borrows a book for a patron.
 - `POST /api/return/{bookId}/patron/{patronId}`: Returns a borrowed book.
+
+### Admin:
+- `GET /api/admins`: Retrieves a list of all admin users (requires ADMIN role).
+- `GET /api/admins/{id}`: Retrieves a specific admin user by their ID (requires ADMIN role).
+- `POST /api/admins`: Creates a new admin user (requires ADMIN role).
+- `PUT /api/admins/{id}`: Updates an existing admin user by their ID (requires ADMIN role).
+- `DELETE /api/admins/{id}`: Deletes an admin user by their ID (requires ADMIN role).
+
+## Security
+The Library Management System API uses Spring Security for authentication and authorization. The key security features include:
+
+- Basic Authentication: The API uses HTTP Basic Authentication for securing the endpoints.
+- Role-Based Access Control: The API enforces role-based access control:
+  - The ADMIN role is required to manage admin users and perform certain sensitive operations.
+  - All other endpoints require users to be authenticated.
+- Stateless Sessions: The API uses stateless session management, meaning that each request must be authenticated individually, typically via an Authorization header.
 
 ## Testing:
 testing is implimentet for all layers and all methods

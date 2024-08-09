@@ -5,15 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
 public class UserDTO {
 
     private String username;
-    private Set<String> roles;
     private String password;
 
     // Getters and Setters
@@ -21,14 +18,14 @@ public class UserDTO {
     public static UserDTO toDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setUsername(user.getUsername());
-        dto.setRoles(user.getRoles());
+        dto.setPassword(user.getPassword());
         return dto;
     }
 
     public static User toEntity(UserDTO dto) {
         User user = new User();
         user.setUsername(dto.getUsername());
-        user.setRoles(dto.getRoles());
+        user.setPassword(dto.getPassword());
         return user;
     }
 }

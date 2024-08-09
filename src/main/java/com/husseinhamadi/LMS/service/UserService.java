@@ -5,6 +5,7 @@ import com.husseinhamadi.LMS.entity.User;
 import com.husseinhamadi.LMS.exception.NotFoundException;
 import com.husseinhamadi.LMS.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ public class UserService {
     @Autowired
     private UserRepo userRepository;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     public List<UserDTO> getAdminList() {
-        List<User> admins = userRepository.findByRolesContaining("ADMIN");
+        List<User> admins = userRepository.findAll();
         List<UserDTO> adminDTOs = new ArrayList<>();
 
         for (User admin : admins) {
@@ -40,8 +43,7 @@ public class UserService {
 
     public UserDTO createAdmin(UserDTO userDTO) {
         User admin = UserDTO.toEntity(userDTO);
-        admin.setPassword(admin.getPassword());
-        admin.getRoles().add("ADMIN");
+        admin.setPassword(encoder.encode(userDTO.getPassword()));
         User savedAdmin = userRepository.save(admin);
         return UserDTO.toDTO(savedAdmin);
     }
@@ -52,9 +54,8 @@ public class UserService {
             User admin = adminOptional.get();
             admin.setUsername(userDTO.getUsername());
             if (userDTO.getPassword() != null) {
-                admin.setPassword(userDTO.getPassword());
+                admin.setPassword(encoder.encode(userDTO.getPassword()));
             }
-            admin.setRoles(userDTO.getRoles());
             User updatedAdmin = userRepository.save(admin);
             return UserDTO.toDTO(updatedAdmin);
         } else {
